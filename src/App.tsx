@@ -32,18 +32,94 @@ const COUNTRY_LIST = [
   "Cuba",
 ];
 
+const isPhoneFormatValid = (val: string) => {
+  return (
+    val.length === 15 &&
+    val[0] === "(" &&
+    /^[0-9]*$/.test(val[1]) &&
+    /^[0-9]*$/.test(val[2]) &&
+    /^[0-9]*$/.test(val[3]) &&
+    val[4] === ")" &&
+    val[5] === " " &&
+    /^[0-9]*$/.test(val[6]) &&
+    /^[0-9]*$/.test(val[7]) &&
+    /^[0-9]*$/.test(val[8]) &&
+    val[9] === "-" &&
+    /^[0-9]*$/.test(val[10]) &&
+    /^[0-9]*$/.test(val[11]) &&
+    val[12] === "-" &&
+    /^[0-9]*$/.test(val[13]) &&
+    /^[0-9]*$/.test(val[14])
+  );
+};
+
+const isCreditFormatValid = (val: string) => {
+  return /^\(?([0-9]{4})\)?-?([0-9]{4})-?([0-9]{4})-?([0-9]{4})$/.test(val);
+};
+
+const isExpirationDateValid = (val: string) => {
+  return (
+    val.length === 7 &&
+    /^[0-9]*$/.test(val[0]) &&
+    /^[0-9]*$/.test(val[1]) &&
+    val[2] === " " &&
+    val[3] === "/" &&
+    val[4] === " " &&
+    /^[0-9]*$/.test(val[5]) &&
+    /^[0-9]*$/.test(val[6])
+  );
+};
+
 function App() {
+  const [isFormSubmitted, setFormSubmitted] = useState(false);
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
   const [country, setCountry] = useState("");
+  const [postalCode, setPostalCode] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [creditCard, setCreditCard] = useState("");
   const [securityCode, setSecurityCode] = useState("");
   const [expirationDate, setExpirationDate] = useState("");
 
+  const handlePostalCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let val = e.target.value;
+    if (/^[0-9]*$/.test(val) && val.length <= 4) {
+      setPostalCode(val);
+    }
+  };
+
+  const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let val = e.target.value;
+    if (val.length <= 15) {
+      setPhoneNumber(val);
+    }
+  };
+
+  const handleCreditCardChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let val = e.target.value;
+    if (val.length <= 19) {
+      setCreditCard(val);
+    }
+  };
+
+  const handleSecurityCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let val = e.target.value;
+    if (val.length <= 3) {
+      setSecurityCode(val);
+    }
+  };
+
+  const handleExpirationDate = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let val = e.target.value;
+    if (val.length <= 7) {
+      setExpirationDate(val);
+    }
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setFormSubmitted(true);
   };
 
   return (
@@ -65,6 +141,8 @@ function App() {
               placeholder="Elon"
               value={firstname}
               handleInputChange={(e) => setFirstname(e.target.value)}
+              error={isFormSubmitted && !firstname}
+              message="Please enter First name"
             />
             <TextField
               label="Last name"
@@ -72,6 +150,8 @@ function App() {
               placeholder="Musk"
               value={lastname}
               handleInputChange={(e) => setLastname(e.target.value)}
+              error={isFormSubmitted && !lastname}
+              message="Please enter Last name"
             />
           </FieldName>
           <FieldEmail>
@@ -81,6 +161,10 @@ function App() {
               placeholder="elon@spacex.com"
               value={email}
               handleInputChange={(e) => setEmail(e.target.value)}
+              error={
+                isFormSubmitted && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+              }
+              message="Please enter a valid Email"
             />
           </FieldEmail>
           <FieldAddress>
@@ -95,8 +179,10 @@ function App() {
               label="Postal Code"
               name="postal_code"
               placeholder="10001"
-              value={email}
-              handleInputChange={(e) => setEmail(e.target.value)}
+              value={postalCode}
+              handleInputChange={handlePostalCodeChange}
+              error={isFormSubmitted && !postalCode}
+              message="Please enter Postal Code"
             />
           </FieldAddress>
           <FieldPhone>
@@ -105,7 +191,9 @@ function App() {
               name="phone_number"
               placeholder="(212) 692-93-92"
               value={phoneNumber}
-              handleInputChange={(e) => setPhoneNumber(e.target.value)}
+              handleInputChange={handlePhoneNumberChange}
+              error={isFormSubmitted && !isPhoneFormatValid(phoneNumber)}
+              message="Please enter a valid Phone Number"
             />
           </FieldPhone>
           <PartTitle>
@@ -119,8 +207,10 @@ function App() {
               name="credit_card_number"
               placeholder="0000-0000-0000-0000"
               value={creditCard}
-              handleInputChange={(e) => setCreditCard(e.target.value)}
+              handleInputChange={handleCreditCardChange}
               icon="visa"
+              error={isFormSubmitted && !isCreditFormatValid(creditCard)}
+              message="Please enter a valid Credit Card Number"
             />
           </FieldCreditCard>
           <FieldCardDetail>
@@ -130,15 +220,19 @@ function App() {
               type="password"
               placeholder="***"
               value={securityCode}
-              handleInputChange={(e) => setSecurityCode(e.target.value)}
+              handleInputChange={handleSecurityCodeChange}
               icon="security"
+              error={isFormSubmitted && securityCode.length < 3}
+              message="Please enter a valid Security code"
             />
             <TextField
               label="Expiration date"
               name="expiration_date"
               placeholder="MM / YY"
               value={expirationDate}
-              handleInputChange={(e) => setExpirationDate(e.target.value)}
+              handleInputChange={handleExpirationDate}
+              error={isFormSubmitted && !isExpirationDateValid(expirationDate)}
+              message="Please enter a valid Expiration date"
             />
           </FieldCardDetail>
           <Button>

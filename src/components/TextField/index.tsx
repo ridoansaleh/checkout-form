@@ -1,5 +1,13 @@
 import * as React from "react";
-import { Container, Label, Input, IconV, IconQ } from "./_textFieldStyle";
+import {
+  Container,
+  Wrapper,
+  Label,
+  Input,
+  IconV,
+  IconQ,
+  ErrorMessage,
+} from "./_textFieldStyle";
 import visaIcon from "./assets/visa.svg";
 
 interface InputChangeFunc {
@@ -14,6 +22,8 @@ interface Props {
   value?: string;
   handleInputChange: InputChangeFunc;
   icon?: string;
+  error: boolean;
+  message: string;
 }
 
 function TextField({ type = "text", ...props }: Props) {
@@ -25,16 +35,19 @@ function TextField({ type = "text", ...props }: Props) {
 
   return (
     <Container>
-      <Label>{props.label}</Label>
-      <Input
-        name={props.name}
-        type={type}
-        placeholder={props.placeholder}
-        value={props.value}
-        onChange={props.handleInputChange}
-      />
-      {props.icon === "visa" && <IconV src={selectedIcon} />}
-      {props.icon === "security" && <IconQ>?</IconQ>}
+      <Wrapper error={props.error}>
+        <Label>{props.label}</Label>
+        <Input
+          name={props.name}
+          type={type}
+          placeholder={props.placeholder}
+          value={props.value}
+          onChange={props.handleInputChange}
+        />
+        {props.icon === "visa" && <IconV src={selectedIcon} />}
+        {props.icon === "security" && <IconQ>?</IconQ>}
+      </Wrapper>
+      {props.error && <ErrorMessage>{props.message}</ErrorMessage>}
     </Container>
   );
 }
