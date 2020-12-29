@@ -27,12 +27,6 @@ interface Props {
 }
 
 function TextField({ type = "text", ...props }: Props) {
-  let selectedIcon = "";
-
-  if (props.icon === "visa") {
-    selectedIcon = visaIcon;
-  }
-
   return (
     <Container>
       <Wrapper error={props.error}>
@@ -44,7 +38,7 @@ function TextField({ type = "text", ...props }: Props) {
           value={props.value}
           onChange={props.handleInputChange}
         />
-        {props.icon === "visa" && <IconV src={selectedIcon} />}
+        {props.icon === "visa" && <IconV src={visaIcon} />}
         {props.icon === "security" && <IconQ>?</IconQ>}
       </Wrapper>
       {props.error && <ErrorMessage>{props.message}</ErrorMessage>}
