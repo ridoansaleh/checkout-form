@@ -18,12 +18,6 @@ function SelectField(props: Props) {
   return (
     <Container>
       <Label>{props.label}</Label>
-      {/* <Input
-        name={props.name}
-        placeholder={props.placeholder}
-        value={props.value}
-        onChange={props.handleInputChange}
-      /> */}
       <Select value={props.value} onChange={props.handleInputChange}>
         {props.options.map((option) => (
           <Option key={option}>{option}</Option>

@@ -1,12 +1,18 @@
 import styled from "styled-components";
 
 const Container = styled.div`
-  background-color: #f6f6f6;
+  min-width: 320px;
+  background-color: #dedede;
 `;
 
 const Header = styled.header`
-  padding: 10px 50px;
+  padding: 10px 20px;
   box-shadow: 1px 5px 6px #c7c8c8;
+  background-color: #fff;
+
+  @media only screen and (min-width: 1024px) {
+    padding: 10px 50px;
+  }
 `;
 
 const BlackBox = styled.div`
@@ -16,13 +22,30 @@ const BlackBox = styled.div`
   border-radius: 5px;
 `;
 
-const Content = styled.div`
+const Content = styled.main`
   display: flex;
   flex-direction: column;
   max-width: 1024px;
   min-height: 80vh;
+  padding: 20px;
 
-  padding: 50px 50px;
+  @media only screen and (min-width: 1024px) {
+    padding: 50px;
+  }
+`;
+
+const CheckoutWrapper = styled.div`
+  display: flex;
+  flex-direction: column-reverse;
+
+  @media only screen and (min-width: 1024px) {
+    flex-direction: row;
+
+    form {
+      width: calc(100% - 340px);
+      margin-right: 40px;
+    }
+  }
 `;
 
 const PageTitle = styled.h1`
@@ -67,7 +90,6 @@ const Icon = styled.img`
 
 const FieldName = styled.div`
   display: flex;
-  margin-left: 45px;
 
   > div:nth-child(1) {
     margin-right: 20px;
@@ -75,41 +97,55 @@ const FieldName = styled.div`
 
   > div {
     width: calc((100% - 20px) / 2);
+  }
+
+  @media only screen and (min-width: 1024px) {
+    margin-left: 45px;
   }
 `;
 
 const FieldEmail = styled.div`
   margin-top: 24px;
-  margin-left: 45px;
+
+  @media only screen and (min-width: 1024px) {
+    margin-left: 45px;
+  }
 `;
 
 const FieldAddress = styled.div`
   display: flex;
   margin-top: 24px;
-  margin-left: 45px;
 
   > div:nth-child(1) {
     margin-right: 20px;
   }
 
   > div {
-    width: calc((100% - 20px) / 2);
+    width: calc((100% - 40px) / 2);
+  }
+
+  @media only screen and (min-width: 1024px) {
+    margin-left: 45px;
   }
 `;
 
 const FieldPhone = styled.div`
   margin-top: 24px;
-  margin-left: 45px;
+
+  @media only screen and (min-width: 1024px) {
+    margin-left: 45px;
+  }
 `;
 
 const FieldCreditCard = styled.div`
-  margin-left: 45px;
+  @media only screen and (min-width: 1024px) {
+    margin-left: 45px;
+  }
 `;
 
 const FieldCardDetail = styled.div`
   display: flex;
   margin-top: 24px;
-  margin-left: 45px;
 
   > div:nth-child(1) {
     margin-right: 20px;
@@ -118,20 +154,28 @@ const FieldCardDetail = styled.div`
   > div {
     width: calc((100% - 20px) / 2);
   }
+
+  @media only screen and (min-width: 1024px) {
+    margin-left: 45px;
+  }
 `;
 
 const Button = styled.button`
   background-color: #39a839;
-  width: calc(100% - 45px);
+  width: 100%;
   height: 63px;
   border: 0;
   margin-top: 40px;
-  margin-left: 45px;
   font-size: 18px;
   font-weight: 600;
   color: #fff;
   text-transform: uppercase;
   border-radius: 5px;
+
+  @media only screen and (min-width: 1024px) {
+    width: calc(100% - 45px);
+    margin-left: 45px;
+  }
 `;
 
 const ShoppingCart = styled.img`
@@ -140,12 +184,62 @@ const ShoppingCart = styled.img`
   margin-right: 10px;
 `;
 
+const ProductDetail = styled.section`
+  width: 100%;
+  height: 327px;
+  margin-top: 40px;
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 6px;
+  box-sizing: border-box;
+
+  @media only screen and (min-width: 1024px) {
+    width: 300px;
+    margin-top: 105px;
+  }
+`;
+
+const Frame = styled.div`
+  border: 1px dotted #d6d6d6;
+  padding: 20px;
+  height: calc(100% - 42px);
+`;
+
+const ProductDetailTitle = styled.h2`
+  margin-top: 0;
+  font-size: 17px;
+  font-weight: 700;
+  text-transform: uppercase;
+`;
+
+const Item = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+`;
+
+const LineDots = styled.div`
+  border-top: 2px dotted #d6d6d6;
+  margin: 20px 0 10px;
+`;
+
+const TotalPrice = styled.div`
+  display: flex;
+  justify-content: space-between;
+  font-weight: 500;
+
+  > div:nth-child(2) {
+    font-size: 25px;
+  }
+`;
+
 export {
   Container,
   Header,
   BlackBox,
   PageTitle,
   Content,
+  CheckoutWrapper,
   PartTitle,
   Number,
   Icon,
@@ -157,4 +251,10 @@ export {
   FieldCardDetail,
   Button,
   ShoppingCart,
+  ProductDetail,
+  Frame,
+  ProductDetailTitle,
+  Item,
+  LineDots,
+  TotalPrice,
 };
