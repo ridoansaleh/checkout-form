@@ -4,7 +4,7 @@ import SelectField from "./components/SelectField";
 import {
   Container,
   Header,
-  BlackBox,
+  WebsiteIcon,
   PageTitle,
   Content,
   CheckoutWrapper,
@@ -36,9 +36,11 @@ import {
   isSecurityCodeValid,
   isExpirationDateValid,
 } from "./validation";
-import isPhoneNumberFormatReliable from "./format/phone_number";
-import isCreditCardFormatReliable from "./format/credit_card";
-import isExpiredDateFormatReliable from "./format/expired_date";
+import {
+  isPhoneNumberFormatReliable,
+  isCreditCardFormatReliable,
+  isExpiredDateFormatReliable,
+} from "./format";
 
 const COUNTRY_LIST = [
   "United States",
@@ -72,9 +74,12 @@ function App() {
   const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let val: string[] = e.target.value.split("");
 
-    if (val.length > 15) return;
-    if (!isPhoneNumberFormatReliable(val) && !/^\d+$/g.test(val.join("")))
+    if (
+      val.length > 15 ||
+      (!isPhoneNumberFormatReliable(val) && !/^\d+$/g.test(val.join("")))
+    ) {
       return;
+    }
 
     if (phoneNumber.length < val.length) {
       if (val.length === 1) {
@@ -123,8 +128,9 @@ function App() {
   const handleCreditCardChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let val: string[] = e.target.value.split("");
     if (val.length <= 19) {
-      if (!isCreditCardFormatReliable(val) && !/^\d+$/g.test(val.join("")))
+      if (!isCreditCardFormatReliable(val) && !/^\d+$/g.test(val.join(""))) {
         return;
+      }
       if (creditCard.length < val.length) {
         if (val.length === 4) {
           val.push("-");
@@ -216,7 +222,7 @@ function App() {
   return (
     <Container>
       <Header>
-        <BlackBox />
+        <WebsiteIcon />
       </Header>
       <Content>
         <PageTitle>You've come a long way, Baby!</PageTitle>

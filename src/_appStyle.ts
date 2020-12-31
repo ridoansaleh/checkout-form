@@ -15,7 +15,7 @@ const Header = styled.header`
   }
 `;
 
-const BlackBox = styled.div`
+const WebsiteIcon = styled.div`
   height: 40px;
   width: 40px;
   background-color: #646768;
@@ -236,7 +236,7 @@ const TotalPrice = styled.div`
 export {
   Container,
   Header,
-  BlackBox,
+  WebsiteIcon,
   PageTitle,
   Content,
   CheckoutWrapper,
